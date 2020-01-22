@@ -16,3 +16,7 @@ Freeze dependencies\
 
 Install dependencies\
 `pip install -r requirements/shared.txt`
+
+## Additional docs
+
+[SQLAlchemy + Flask Tutorial](https://docs.graphene-python.org/projects/sqlalchemy/en/latest/tutorial/)
