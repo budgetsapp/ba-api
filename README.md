@@ -29,10 +29,27 @@ Install dependencies\
 
 ## Launch
 
-`export FLASK_APP=app.py`
+Mac OS\
+`export FLASK_APP=app.py`\
 `flask run`
+
+Windows\
+`set FLASK_APP=app.py` or for PowerShell `$env:FLASK_APP='app.py'`\
+`flask run`
+
+To make server publicly available\
+`flask run --host=0.0.0.0`
+
+## Debug mode
+
+Activates debugger, automatic reloader\
+`export FLASK_ENV=development` or enable debug only:\
+`export FLASK_DEBUG=1`
 
 ## Additional docs
 
 [SQLAlchemy + Flask Tutorial](https://docs.graphene-python.org/projects/sqlalchemy/en/latest/tutorial/)
 [Flask](https://flask.palletsprojects.com/en/1.1.x/)
+
+UUID sample\
+`123e4567-e89b-12d3-a456-426655440000`
