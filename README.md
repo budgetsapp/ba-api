@@ -20,3 +20,4 @@ Install dependencies\
 ## Additional docs
 
 [SQLAlchemy + Flask Tutorial](https://docs.graphene-python.org/projects/sqlalchemy/en/latest/tutorial/)
+[Flask](https://flask.palletsprojects.com/en/1.1.x/)
