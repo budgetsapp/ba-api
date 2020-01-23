@@ -2,11 +2,21 @@
 
 ## Virtual env
 
-Install virtual env\
-`pip3 install virtualenv`
+Install virtual env
 
-Activate\
-`source venv/bin/activate` or `source venv/bin/activate.fish`
+Mac OS\
+`python3 -m venv venv`
+
+Windows\
+`py -3 -m venv venv`
+
+Activate
+
+Mac OS\
+`. venv/bin/activate` or `. venv/bin/activate.fish`
+
+Windows\
+`venv\Scripts\activate`
 
 Deactivate\
 `deactivate`
@@ -16,6 +26,11 @@ Freeze dependencies\
 
 Install dependencies\
 `pip install -r requirements/shared.txt`
+
+## Launch
+
+`export FLASK_APP=app.py`
+`flask run`
 
 ## Additional docs
 
