@@ -25,4 +25,7 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    from .db import setup
+    setup.init_app(app)
+
     return app
