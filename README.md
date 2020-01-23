@@ -22,10 +22,10 @@ Deactivate\
 `deactivate`
 
 Freeze dependencies\
-`pip freeze > requirements/shared.txt`
+`pip freeze > requirements.txt`
 
 Install dependencies\
-`pip install -r requirements/shared.txt`
+`pip install -r requirements.txt`
 
 ## Launch
 
