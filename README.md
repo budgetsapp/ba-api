@@ -30,11 +30,11 @@ Install dependencies\
 ## Launch
 
 Mac OS\
-`export FLASK_APP=app.py`\
+`export FLASK_APP=setup.py`\
 `flask run`
 
 Windows\
-`set FLASK_APP=app.py` or for PowerShell `$env:FLASK_APP='app.py'`\
+`set FLASK_APP=setup.py` or for PowerShell `$env:FLASK_APP='setup.py'`\
 `flask run`
 
 To make server publicly available\
@@ -45,6 +45,16 @@ To make server publicly available\
 Activates debugger, automatic reloader\
 `export FLASK_ENV=development` or enable debug only:\
 `export FLASK_DEBUG=1`
+
+## Configurations
+
+`export FLASK_CONFIG=dev`\
+`export FLASK_CONFIG=prod`\
+`export FLASK_CONFIG=test`\
+
+## Database
+
+`flask init-db`
 
 ## Additional docs
 
