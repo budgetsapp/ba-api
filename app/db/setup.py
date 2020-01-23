@@ -22,7 +22,7 @@ def get_db():
     # g is an object that is unique for each request
     if 'db' not in g:
         g.db = sqlite3.connect(
-            current_app.config['DATABASE_PATH'],
+            current_app.config['DATABASE_URL'],
             detect_types=sqlite3.PARSE_DECLTYPES
         )
         g.db.row_factory = sqlite3.Row
