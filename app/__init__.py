@@ -11,7 +11,7 @@ config = {
 
 
 def create_app():
-    config_name = os.getenv('FLASK_CONFIG', 'test')
+    config_name = os.getenv('FLASK_CONFIG', 'dev')
     app = Flask(__name__, instance_relative_config=True)
 
     app.config.from_object(config[config_name])

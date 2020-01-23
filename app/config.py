@@ -1,4 +1,5 @@
 class Config:
+    FLASK_ENV = 'production'
     DEBUG = False
     TESTING = False
     DATABASE_URL = 'sqlite:///:memory:'
@@ -9,6 +10,7 @@ class ProdConfig(Config):
 
 
 class DevConfig(Config):
+    FLASK_ENV = 'development'
     DEBUG = True
     DATABASE_URL = 'db_dev/budgetsapp.sqlite'
 
