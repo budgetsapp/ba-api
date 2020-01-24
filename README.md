@@ -63,3 +63,10 @@ Activates debugger, automatic reloader\
 
 UUID sample\
 `123e4567-e89b-12d3-a456-426655440000`
+
+## Notes
+
+Variables set on the command line are used over those set in `.env`, which are used over those set in `.flaskenv`.
+`.flaskenv` should be used for public variables, such as `FLASK_APP`, while `.env` should not be committed to your repository so that it can set private variables.
+
+The files are only loaded by the flask command or calling `run()`. If you would like to load these files when running in production, you should call `load_dotenv()` manually
