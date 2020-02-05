@@ -23,7 +23,7 @@ class Query(graphene.ObjectType):
 
     def resolve_category(self, info, category_id):
         query = CategoryType.get_query(info)
-        return query.filter(CategoryModel.id == category_id).first()
+        return query.filter(CategoryModel.category_id == category_id).first()
 
 
 schema = graphene.Schema(query=Query)

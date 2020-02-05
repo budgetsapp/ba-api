@@ -37,7 +37,7 @@ def add_category(categories_seed_data, display_name, user_id):
     from app.helpers.datetime import dt_from_str
     category_raw = get_item_by_value(
         categories_seed_data, "display_name", display_name)
-    category = Category(id=category_raw["id"],
+    category = Category(category_id=category_raw["category_id"],
                         display_name=category_raw["display_name"],
                         created_at=dt_from_str(category_raw["created_at"]),
                         user_id=user_id)
