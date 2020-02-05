@@ -2,6 +2,7 @@ import os
 from flask import Flask
 from flask_cors import CORS
 from flask_graphql import GraphQLView
+from flask_jwt_extended import JWTManager, get_jwt_identity
 
 from .extensions import db
 from app import cli
@@ -15,6 +16,7 @@ config = {
 }
 
 app = Flask(__name__, instance_relative_config=True)
+jwt = JWTManager(app)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 app.add_url_rule(

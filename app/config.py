@@ -8,6 +8,10 @@ class Config:
     SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    @property
+    def JWT_SECRET_KEY(self):
+        return os.getenv("JWT_SECRET_KEY", None)
+
 
 class ProdConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'mysql://user@localhost/db'
