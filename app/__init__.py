@@ -1,9 +1,11 @@
 import os
 from flask import Flask
 from flask_cors import CORS
+from flask_graphql import GraphQLView
 
 from .extensions import db
 from app import cli
+from app.api import schema
 
 
 config = {
@@ -14,6 +16,9 @@ config = {
 
 app = Flask(__name__, instance_relative_config=True)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
+
+app.add_url_rule(
+    '/graphql', view_func=GraphQLView.as_view('graphql', schema=schema, graphiql=True))
 
 
 def create_app():
