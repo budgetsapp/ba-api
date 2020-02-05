@@ -4,7 +4,7 @@ from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
 from app.models import Category as CategoryModel
 
 
-class Category(SQLAlchemyObjectType):
+class CategoryType(SQLAlchemyObjectType):
     class Meta:
         model = CategoryModel
         interfaces = (relay.Node, )
@@ -12,17 +12,17 @@ class Category(SQLAlchemyObjectType):
 
 class CategoryConnection(relay.Connection):
     class Meta:
-        node = Category
+        node = CategoryType
 
 
 class Query(graphene.ObjectType):
     node = relay.Node.Field()
     all_categories = SQLAlchemyConnectionField(CategoryConnection)
 
-    get_category = graphene.Field(Category, category_id=graphene.String())
+    category = graphene.Field(CategoryType, category_id=graphene.String())
 
-    def resolve_get_category(self, info, category_id):
-        query = Category.get_query(info)
+    def resolve_category(self, info, category_id):
+        query = CategoryType.get_query(info)
         return query.filter(CategoryModel.id == category_id).first()
 
 

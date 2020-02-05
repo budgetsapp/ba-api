@@ -4,7 +4,7 @@ from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
 from app.models import Expense as ExpenseModel
 
 
-class Expense(SQLAlchemyObjectType):
+class ExpenseType(SQLAlchemyObjectType):
     class Meta:
         model = ExpenseModel
         interfaces = (relay.Node, )
@@ -12,7 +12,7 @@ class Expense(SQLAlchemyObjectType):
 
 class ExpensesConnection(relay.Connection):
     class Meta:
-        node = Expense
+        node = ExpenseType
 
 
 class Query(graphene.ObjectType):
