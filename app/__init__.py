@@ -1,8 +1,9 @@
 import os
-
 from flask import Flask
-from app.api import categories
-from app import db
+from flask_cors import CORS
+
+from .extensions import db
+from app import cli
 
 
 config = {
@@ -12,6 +13,7 @@ config = {
 }
 
 app = Flask(__name__, instance_relative_config=True)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 def create_app():
@@ -22,14 +24,7 @@ def create_app():
     config_object = import_string(config[config_name])()
     app.config.from_object(config_object)
 
-    app.register_blueprint(categories.blueprint)
-
-    # ensure the db_dev folder exists
-    try:
-        os.makedirs('db_dev')
-    except OSError:
-        pass
-
     db.init_app(app)
+    cli.init_cli_commands(app)
 
     return app

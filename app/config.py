@@ -14,17 +14,12 @@ class ProdConfig(Config):
 
 
 class DevConfig(Config):
-
-    def __init__(self):
-        self.root = os.path.abspath(os.path.join(os.path.dirname(
-            __file__), '..'))
-
     FLASK_ENV = 'development'
     DEBUG = True
 
     @property
     def SQLALCHEMY_DATABASE_URI(self):
-        uri = 'sqlite:///{}\\db_dev\\budgetsapp.sqlite'.format(self.root)
+        uri = 'sqlite:///budgetsapp.sqlite'
         print(uri)
         return uri
 
