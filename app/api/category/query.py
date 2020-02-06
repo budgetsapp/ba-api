@@ -32,6 +32,3 @@ class Query(graphene.ObjectType):
             raise GraphQLError('Not authorized')
         else:
             return category
-
-
-schema = graphene.Schema(query=Query)
