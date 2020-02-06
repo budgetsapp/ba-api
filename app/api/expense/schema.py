@@ -1,28 +1,21 @@
 import graphene
-from graphene import relay
-from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
-from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt_claims
+from flask_jwt_extended import jwt_required, get_jwt_claims
 
 from app.models import Expense as ExpenseModel
-
-
-class ExpenseType(SQLAlchemyObjectType):
-    class Meta:
-        model = ExpenseModel
+from .types import ExpenseType
+from app.extensions import db
 
 
 class Query(graphene.ObjectType):
     my_expenses = graphene.List(
-        ExpenseType, page=graphene.Int(), page_size=graphene.Int())
+        ExpenseType, first=graphene.Int(), offset=graphene.Int())
 
     @jwt_required
-    def resolve_my_expenses(self, info, page, page_size):
+    def resolve_my_expenses(self, info, first, offset):
         claims = get_jwt_claims()
         user_id = claims['id']
 
-        offset = page * page_size
-        expense_query = ExpenseType.get_query(info)
-        return expense_query.filter_by(user_id=user_id).offset(offset).limit(page_size)
+        return db.session.query(ExpenseModel).filter_by(user_id=user_id).offset(offset).limit(first)
 
 
 schema = graphene.Schema(query=Query)
