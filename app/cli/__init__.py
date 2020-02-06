@@ -32,7 +32,7 @@ def get_item_by_value(items, key, value):  # TODO: move to utils/helpers
     return match
 
 
-def add_category(categories_seed_data, display_name, user_id):
+def add_category(categories_seed_data, display_name):
     from app.models import Category
     from app.helpers.datetime import dt_from_str
     category_raw = get_item_by_value(
@@ -40,7 +40,7 @@ def add_category(categories_seed_data, display_name, user_id):
     category = Category(category_id=category_raw["category_id"],
                         display_name=category_raw["display_name"],
                         created_at=dt_from_str(category_raw["created_at"]),
-                        user_id=user_id)
+                        user_id=category_raw["user_id"])
     db.session.add(category)
 
 
@@ -51,15 +51,17 @@ def load_db_data():
     root = os.path.realpath(os.path.dirname(__file__))
 
     # users data
-    users_seed_data = json.load(open(os.path.join(root, "users.json")))
-    ba_user_1_raw = get_item_by_value(users_seed_data, "login", "ba-user-1")
+    # users_seed_data = json.load(open(os.path.join(root, "users.json")))
+    # ba_user_1_raw = get_item_by_value(users_seed_data, "login", "ba-user-1")
+    # ba_user_2_raw = get_item_by_value(users_seed_data, "login", "ba-user-2")
 
     # categories data
     categories_seed_data = json.load(
         open(os.path.join(root, "categories.json")))
 
-    add_category(categories_seed_data, 'taxi', ba_user_1_raw['id'])
-    add_category(categories_seed_data, 'fastfood', ba_user_1_raw['id'])
+    add_category(categories_seed_data, 'taxi')
+    add_category(categories_seed_data, 'fastfood')
+    add_category(categories_seed_data, 'cafe')
 
     # expenses data
 
