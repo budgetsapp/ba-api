@@ -15,6 +15,7 @@ class CategoryType(graphene.ObjectType):
     display_name = graphene.String()
     expenses = graphene.List(
         lambda: ExpenseTypes.ExpenseType, first=graphene.Int(), offset=graphene.Int())
+    expenses_total = graphene.Int()
 
     def resolve_id(parent, info):
         return parent.category_id
@@ -30,3 +31,6 @@ class CategoryType(graphene.ObjectType):
 
     def resolve_expenses(parent, info, first, offset):
         return db.session.query(CategoryModel.expenses).offset(offset).limit(first)
+
+    def resolve_expenses_total(parent, info):
+        return db.session.query(CategoryModel.expenses).count()
