@@ -11,6 +11,7 @@ class Query(graphene.ObjectType):
     my_categories = graphene.List(
         CategoryType, first=graphene.Int(), offset=graphene.Int())
     category = graphene.Field(CategoryType, id=graphene.ID())
+    my_categories_total = graphene.Int()
 
     @jwt_required
     def resolve_my_categories(self, info, first, offset):
@@ -18,6 +19,13 @@ class Query(graphene.ObjectType):
         user_id = claims['id']
 
         return db.session.query(CategoryModel).filter_by(user_id=user_id).offset(offset).limit(first)
+
+    @jwt_required
+    def resolve_my_categories_total(self, info):
+        claims = get_jwt_claims()
+        user_id = claims['id']
+
+        return db.session.query(CategoryModel).filter_by(user_id=user_id).count()
 
     @jwt_required
     def resolve_category(self, info, id):
