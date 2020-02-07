@@ -23,5 +23,33 @@ class CreateCategoryMutation(graphene.Mutation):
         return CreateCategoryMutation(category=category)
 
 
+class CategoryInput(graphene.InputObjectType):
+    displayName = graphene.String(required=False)
+
+
+class EditCategoryMutation(graphene.Mutation):
+    class Arguments:
+        category_input = CategoryInput(required=True)
+        id = graphene.ID(required=True)
+
+    # The class attributes define the response of the mutation
+    category = graphene.Field(CategoryType)
+
+    @jwt_required
+    def mutate(self, info, id, category_input=None):
+        claims = get_jwt_claims()
+        user_id = claims['id']
+
+        category = category_service.get_category_by_id(id)
+
+        if not category.user_id == user_id:
+            raise GraphQLError('Not authorized')
+        else:
+            edited_category = category_service.edit_category(
+                category, category_input)
+            return CreateCategoryMutation(category=edited_category)
+
+
 class Mutation(graphene.ObjectType):
     create_category = CreateCategoryMutation.Field()
+    edit_category = EditCategoryMutation.Field()

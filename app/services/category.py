@@ -12,3 +12,15 @@ def create_category(user_id, display_name):
     db.session.add(category)
     db.session.commit()
     return category
+
+
+def edit_category(category, category_input):
+    category.display_name = category_input.displayName
+    db.session.add(category)
+    db.session.commit()
+    return category
+
+
+def get_category_by_id(category_id):
+    return db.session.query(CategoryModel).filter_by(
+        category_id=category_id).first()
