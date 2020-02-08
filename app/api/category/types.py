@@ -1,6 +1,7 @@
 import graphene
 
 from app.models import Category as CategoryModel
+from app.models import Expense as ExpenseModel
 from app.extensions import db
 import app.api.expense.types as ExpenseTypes
 
@@ -9,8 +10,8 @@ class CategoryType(graphene.ObjectType):
     class Meta:
         description = 'A category'
 
-    id = graphene.UUID()
-    user_id = graphene.UUID()
+    id = graphene.ID()
+    user_id = graphene.ID()
     created_at = graphene.DateTime()
     display_name = graphene.String()
     expenses = graphene.List(
@@ -30,7 +31,10 @@ class CategoryType(graphene.ObjectType):
         return parent.display_name
 
     def resolve_expenses(parent, info, first, offset):
-        return db.session.query(CategoryModel.expenses).offset(offset).limit(first)
+        # TODO: how to get expenses from CategoryModel? It raises an error
+        # db.session.query(CategoryModel.expenses).offset(offset).limit(first)
+
+        return db.session.query(ExpenseModel).filter_by(category_id=parent.category_id).offset(offset).limit(first)
 
     def resolve_expenses_total(parent, info):
         return db.session.query(CategoryModel.expenses).count()

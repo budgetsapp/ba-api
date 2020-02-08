@@ -16,6 +16,3 @@ class Query(graphene.ObjectType):
         user_id = claims['id']
 
         return db.session.query(ExpenseModel).filter_by(user_id=user_id).offset(offset).limit(first)
-
-
-schema = graphene.Schema(query=Query)

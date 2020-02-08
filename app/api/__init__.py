@@ -1,19 +1,20 @@
 import graphene
 from .category import Query as CategoryQuery, Mutation as CategoryMutation
-from .expense.schema import Query as ExpenseQuery
+from .expense import Query as ExpenseQuery, Mutation as ExpenseMutation
 
 
 class Query(
         ExpenseQuery,
         CategoryQuery,
-        # NOTE: end with this one
+        # end with this one
         graphene.ObjectType):
     pass
 
 
 class Mutation(
+        ExpenseMutation,
         CategoryMutation,
-        # NOTE: end with this one
+        # end with this one
         graphene.ObjectType):
     pass
 
