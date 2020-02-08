@@ -4,6 +4,7 @@ from app.models import Category as CategoryModel
 from app.models import Expense as ExpenseModel
 from app.extensions import db
 import app.api.expense.types as ExpenseTypes
+from app.services import expense as expense_category
 
 
 class CategoryType(graphene.ObjectType):
@@ -31,10 +32,7 @@ class CategoryType(graphene.ObjectType):
         return parent.display_name
 
     def resolve_expenses(parent, info, first, offset):
-        # TODO: how to get expenses from CategoryModel? It raises an error
-        # db.session.query(CategoryModel.expenses).offset(offset).limit(first)
-
-        return db.session.query(ExpenseModel).filter_by(category_id=parent.category_id).offset(offset).limit(first)
+        return expense_category.get_expenses_by_category(parent.category_id, first, offset)
 
     def resolve_expenses_total(parent, info):
-        return db.session.query(CategoryModel.expenses).count()
+        return expense_category.get_expenses_total_by_category(parent.category_id)
