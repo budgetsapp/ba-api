@@ -50,6 +50,30 @@ class EditCategoryMutation(graphene.Mutation):
             return CreateCategoryMutation(category=edited_category)
 
 
+class DeleteCategoryMutation(graphene.Mutation):
+    class Arguments:
+        id = graphene.ID(required=True)
+
+    # The class attributes define the response of the mutation
+    category = graphene.Field(CategoryType)
+
+    @jwt_required
+    def mutate(self, info, id):
+        claims = get_jwt_claims()
+        user_id = claims['id']
+
+        category = category_service.get_category_by_id(id)
+
+        if not category:
+            raise GraphQLError('No item found')
+        elif not category.user_id == user_id:
+            raise GraphQLError('Not authorized')
+        else:
+            category_service.delete_category(id)
+            return CreateCategoryMutation(category=category)
+
+
 class Mutation(graphene.ObjectType):
     create_category = CreateCategoryMutation.Field()
     edit_category = EditCategoryMutation.Field()
+    delete_category = DeleteCategoryMutation.Field()

@@ -24,3 +24,8 @@ def edit_category(category, category_input):
 def get_category_by_id(category_id):
     return db.session.query(CategoryModel).filter_by(
         category_id=category_id).first()
+
+
+def delete_category(category_id):
+    db.session.query(CategoryModel).filter_by(category_id=category_id).delete()
+    db.session.commit()
