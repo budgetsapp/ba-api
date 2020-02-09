@@ -28,3 +28,13 @@ def get_expenses_by_category(category_id, first, offset):
 
 def get_expenses_total_by_category(category_id):
     return db.session.query(ExpenseModel).filter_by(category_id=category_id).count()
+
+
+def get_expense_by_id(expense_id):
+    return db.session.query(ExpenseModel).filter_by(
+        expense_id=expense_id).first()
+
+
+def delete_expense(expense_id):
+    db.session.query(ExpenseModel).filter_by(expense_id=expense_id).delete()
+    db.session.commit()

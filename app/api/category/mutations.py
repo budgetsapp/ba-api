@@ -70,7 +70,7 @@ class DeleteCategoryMutation(graphene.Mutation):
             raise GraphQLError('Not authorized')
         else:
             category_service.delete_category(id)
-            return CreateCategoryMutation(category=category)
+            return DeleteCategoryMutation(category=category)
 
 
 class Mutation(graphene.ObjectType):

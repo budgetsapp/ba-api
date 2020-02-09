@@ -26,5 +26,29 @@ class CreateExpenseMutation(graphene.Mutation):
         return CreateExpenseMutation(expense=expense)
 
 
+class DeleteExpenseMutation(graphene.Mutation):
+    class Arguments:
+        id = graphene.ID(required=True)
+
+    # The class attributes define the response of the mutation
+    expense = graphene.Field(ExpenseType)
+
+    @jwt_required
+    def mutate(self, info, id):
+        claims = get_jwt_claims()
+        user_id = claims['id']
+
+        expense = expense_service.get_expense_by_id(id)
+
+        if not expense:
+            raise GraphQLError('No item found')
+        elif not expense.user_id == user_id:
+            raise GraphQLError('Not authorized')
+        else:
+            expense_service.delete_expense(id)
+            return DeleteExpenseMutation(expense=expense)
+
+
 class Mutation(graphene.ObjectType):
     create_expense = CreateExpenseMutation.Field()
+    delete_expense = DeleteExpenseMutation.Field()
