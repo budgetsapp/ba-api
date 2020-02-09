@@ -4,6 +4,7 @@ from flask_jwt_extended import jwt_required, get_jwt_claims
 
 from .types import CategoryType
 from app.services import category as category_service
+from app.services import expense as expense_service
 
 
 class CreateCategoryMutation(graphene.Mutation):
@@ -66,6 +67,8 @@ class DeleteCategoryMutation(graphene.Mutation):
 
         if not category:
             raise GraphQLError('No item found')
+        elif expense_service.get_expenses_total_by_category(id) > 0:
+            raise GraphQLError('Category has expenses')
         elif not category.user_id == user_id:
             raise GraphQLError('Not authorized')
         else:
