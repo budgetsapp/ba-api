@@ -2,9 +2,9 @@ import os
 
 
 class Config:
-    FLASK_ENV = 'production'
     DEBUG = False
     TESTING = False
+
     SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
@@ -14,19 +14,14 @@ class Config:
 
 
 class ProdConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'mysql://user@localhost/db'
+    pass
 
 
-class DevConfig(Config):
-    FLASK_ENV = 'development'
+class LocalConfig(Config):
     DEBUG = True
-
-    @property
-    def SQLALCHEMY_DATABASE_URI(self):
-        uri = 'sqlite:///budgetsapp.sqlite'
-        print(uri)
-        return uri
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///C:\\Users\\Vadim\\Documents\\db\\budgetsapp.sqlite'
 
 
-class TestConfig(Config):
-    TESTING = True
+class DevDockerConfig(Config):
+    DEBUG = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite:////usr/db/budgetsapp.sqlite'

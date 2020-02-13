@@ -10,9 +10,9 @@ from app.api import schema
 
 
 config = {
-    'dev': 'app.config.DevConfig',
+    "dev-docker": "app.config.DevDockerConfig",
+    'local': 'app.config.LocalConfig',
     'prod': 'app.config.ProdConfig',
-    'test': 'app.config.TestConfig'
 }
 
 app = Flask(__name__, instance_relative_config=True)
@@ -24,12 +24,15 @@ app.add_url_rule(
 
 
 def create_app():
-    config_name = os.getenv('FLASK_CONFIG', 'dev')
+    config_name = os.getenv('FLASK_CONFIG', 'local')
 
     # app.config.from_object(config[config_name])
     from werkzeug.utils import import_string
     config_object = import_string(config[config_name])()
     app.config.from_object(config_object)
+    print('===> Config name', config_name)
+    print('===> SQLALCHEMY_DATABASE_URI',
+          config_object.SQLALCHEMY_DATABASE_URI)
 
     db.init_app(app)
     cli.init_cli_commands(app)
