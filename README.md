@@ -22,3 +22,6 @@ Variables set on the command line are used over those set in `.env`, which are u
 `.flaskenv` should be used for public variables, such as `FLASK_APP`, while `.env` should not be committed to your repository so that it can set private variables.
 
 The files are only loaded by the flask command or calling `run()`. If you would like to load these files when running in production, you should call `load_dotenv()` manually
+
+for mac users default db localtion:\
+chmod 777 /usr/local/db // get more restrictive permissions

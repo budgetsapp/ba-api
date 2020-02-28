@@ -22,6 +22,10 @@ class LocalConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///C:\\Users\\Vadim\\Documents\\db\\budgetsapp.sqlite'
 
 
+class LocalMacConfig(LocalConfig):
+    SQLALCHEMY_DATABASE_URI = 'sqlite:////usr/local/db/budgetsapp.sqlite'
+
+
 class DevDockerConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:////usr/db/budgetsapp.sqlite'

@@ -12,6 +12,7 @@ from app.api import schema
 config = {
     "dev-docker": "app.config.DevDockerConfig",
     'local': 'app.config.LocalConfig',
+    'local-mac': 'app.config.LocalMacConfig',
     'prod': 'app.config.ProdConfig',
 }
 
