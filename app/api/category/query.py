@@ -6,6 +6,7 @@ from flask_jwt_extended import jwt_required, get_jwt_claims
 from .types import CategoryType
 from app.models import Category as CategoryModel
 from app.extensions import db
+from app.helpers.roles import roles_required, admin_only
 
 
 class Query(graphene.ObjectType):
@@ -16,11 +17,8 @@ class Query(graphene.ObjectType):
     category = graphene.Field(CategoryType, id=graphene.ID())
     my_categories_total = graphene.Int()
 
-    @jwt_required
-    def resolve_my_categories(self, info, first, offset):
-        claims = get_jwt_claims()
-        user_id = claims['id']
-
+    @admin_only
+    def resolve_my_categories(self, info, first, offset, user_id, **kwargs):
         return db.session.query(CategoryModel).filter_by(user_id=user_id).offset(offset).limit(first)
 
     @jwt_required
